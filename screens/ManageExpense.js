@@ -1,10 +1,13 @@
-import { StyleSheet, View , Button} from "react-native";
-import { useLayoutEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { useContext, useLayoutEffect } from "react";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/Styles";
+import Button from "../components/UI/Button";
+import { ExpensesContext } from "../store/Expense-context";
+import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
 function ManageExpenses({route, navigation}) {
-
+const expensesCtx = useContext(ExpensesContext);
 const editedExpenseId = route.params?.expenseId;
 const isEditing = !!editedExpenseId;
 
@@ -14,10 +17,30 @@ useLayoutEffect(() => {
     }) 
 }, [navigation, isEditing])
   
-  function deleteExpenseHandler() {};
+  function deleteExpenseHandler() {
+     expensesCtx.deleteExpense(editedExpenseId);
+     navigation.goBack();
+  };
+
+  function cancelHandler() {
+    navigation.goBack();
+  };
+
+  function confirmHandler(expenseData) {
+    if (isEditing) {
+        expensesCtx.updateExpense(editedExpenseId, expenseData);
+    } else {
+        expensesCtx.addExpense(expenseData);
+    }
+      navigation.goBack();
+  };
 
  return (
   <View style={styles.container}>
+         <ExpenseForm 
+         submitButtonLabel={isEditing ? "Update" : "Add"}
+         onSubmit={confirmHandler}
+          onCancel={cancelHandler} />
     {isEditing && 
     <View style={styles.deleteContainer}>
         <IconButton icon="trash" 

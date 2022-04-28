@@ -2,7 +2,7 @@ import {Pressable, View, Text, StyleSheet} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import {GlobalStyles} from "../../constants/Styles";
-import { getFormattedDate } from "../../util/Date";
+import { getFormattedDate } from "../../util/date";
 
 function ExpenseItem({id,description, amount, date}) {
 

@@ -8,9 +8,9 @@ import {Ionicons} from "@expo/vector-icons"
 import ManageExpenses from './screens/ManageExpense';
 import RecentExpenses from './screens/RecentExpenses';
 import AllExpenses from './screens/AllExpenses';
-
 import {GlobalStyles} from "./constants/Styles";
 import IconButton from './components/UI/IconButton';
+import ExpensesContextProvider from './store/Expense-context';
 
  const Stack = createNativeStackNavigator();
 
@@ -57,6 +57,7 @@ export default function App() {
   return (
    <>
      <StatusBar style="light" />
+     <ExpensesContextProvider>
    <NavigationContainer>
      <Stack.Navigator screenOptions={{
        headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
@@ -68,6 +69,7 @@ export default function App() {
        }}/>
      </Stack.Navigator>
    </NavigationContainer>
+   </ExpensesContextProvider>
    </>
     
   );
